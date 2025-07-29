@@ -401,7 +401,7 @@ local function StackGui()
                         local hum = player.Character.HumanoidRootPart
                         local storage = game:GetService("Workspace").Storage
                         for i, v in pairs(storage:GetChildren()) do
-                            if v.Name == "EnergySphere9" then
+                            if v.Name == "EnergySphere4" then
                                 v:Destroy()
                                 wait()
                                 v:Destroy()
