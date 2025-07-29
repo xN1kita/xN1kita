@@ -1,0 +1,126 @@
+local Zackrepmenu = Instance.new("ScreenGui")
+local Guiframe = Instance.new("Frame")
+local text = Instance.new("TextLabel")
+local giverep = Instance.new("TextButton")
+local stop = Instance.new("TextButton")
+local closegui = Instance.new("TextButton")
+local TextBox = Instance.new("TextBox")
+local TextButton = Instance.new("TextButton")
+
+Zackrepmenu.Parent = game.CoreGui
+
+Guiframe.Name = "Guiframe"
+Guiframe.Parent = Zackrepmenu
+Guiframe.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Guiframe.Position = UDim2.new(0.0438328236, 0, 0.617107928, 0)
+Guiframe.Visible = false
+Guiframe.Size = UDim2.new(0, 214, 0, 90)
+Guiframe.Active = true
+Guiframe.Draggable = true
+
+TextBox.Parent = Guiframe
+TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Position = UDim2.new(0.191588789, 0, 0.288888901, 0)
+TextBox.Size = UDim2.new(0, 132, 0, 18)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox.TextSize = 14.000
+
+text.Name = "text"
+text.Parent = Guiframe
+text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+text.Size = UDim2.new(0, 214, 0, 20)
+text.Font = Enum.Font.Arial
+text.Text = "Zack's Give Rep"
+text.TextColor3 = Color3.fromRGB(0, 0, 0)
+text.TextSize = 14.000
+
+giverep.Name = "giverep"
+giverep.Parent = Guiframe
+giverep.BackgroundColor3 = Color3.fromRGB(170, 170, 170)
+giverep.Position = UDim2.new(0.0280373823, 0, 0.555555582, 0)
+giverep.Size = UDim2.new(0, 92, 0, 31)
+giverep.Font = Enum.Font.Fantasy
+giverep.Text = "Give rep"
+giverep.TextColor3 = Color3.fromRGB(0, 0, 0)
+giverep.TextSize = 14.000
+giverep.MouseButton1Down:connect(function()
+    local selecteduser = TextBox.Text
+     _G.zackrepfarm = true
+
+function Loopgoto()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[selecteduser].Character.HumanoidRootPart.CFrame
+end
+
+function LoopRespawn()
+	game.ReplicatedStorage.RemoteEvent:FireServer({"Respawn"})
+end
+
+function LoopAttack()
+    local args = {
+        [1] = {
+            [1] = "Skill_SoulAttack_Start",
+            [2] = game:GetService("Players")[selecteduser]
+            }
+    }
+
+game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+
+local args = { [1] = { [1] = "Skill_SoulAttack_End" } } game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+end
+
+function RemoveFF()
+    if game.Players.LocalPlayer.Character:FindFirstChild('ForceField')
+        then game.Players.LocalPlayer.Character.ForceField:Destroy()
+    end
+end
+
+while _G.zackrepfarm == true do task.wait()
+    pcall(RemoveFF)
+    pcall(Loopgoto)
+    LoopRespawn()
+    LoopAttack()
+	end
+end)
+
+stop.Name = "stop"
+stop.Parent = Guiframe
+stop.BackgroundColor3 = Color3.fromRGB(170, 170, 170)
+stop.Position = UDim2.new(0.532710314, 0, 0.555555582, 0)
+stop.Size = UDim2.new(0, 93, 0, 31)
+stop.Font = Enum.Font.Fantasy
+stop.Text = "Stop"
+stop.TextColor3 = Color3.fromRGB(0, 0, 0)
+stop.TextSize = 14.000
+stop.MouseButton1Down:connect(function()
+    _G.zackrepfarm = false
+    _G.RemoveFF = false
+end)
+
+closegui.Name = "closegui"
+closegui.Parent = Guiframe
+closegui.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
+closegui.Position = UDim2.new(0.883177578, 0, 0, 0)
+closegui.Size = UDim2.new(0, 25, 0, 20)
+closegui.Font = Enum.Font.SourceSans
+closegui.Text = "X"
+closegui.TextColor3 = Color3.fromRGB(0, 0, 0)
+closegui.TextScaled = true
+closegui.TextSize = 14.000
+closegui.TextWrapped = true
+closegui.MouseButton1Down:connect(function()
+    Guiframe.Visible = false
+end)
+
+TextButton.Parent = Zackrepmenu
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.Position = UDim2.new(-1.86264515e-09, 0, 0.399999976, 0)
+TextButton.Size = UDim2.new(0, 76, 0, 21)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Open"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 14.000
+TextButton.MouseButton1Down:connect(function()
+    Guiframe.Visible = true
+end)
